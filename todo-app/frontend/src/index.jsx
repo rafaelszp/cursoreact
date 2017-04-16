@@ -19,3 +19,5 @@ ReactDOM.render(
         </Provider>
     ,document.getElementById('app')
 );
+
+console.log('Running from ' + API_URL);

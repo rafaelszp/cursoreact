@@ -2,6 +2,15 @@ const webpack = require("webpack");
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+// this config can be in webpack.config.js or other file with constants
+var API_URL = {
+    production: JSON.stringify('prod-url'),
+    development: JSON.stringify('http://localhost:3003/api/todos')
+}
+
+// check environment mode
+var environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+
 module.exports = {
     "entry": "./src/index.jsx",
     "output": {
@@ -13,7 +22,10 @@ module.exports = {
         "contentBase": "./public"
     },
     plugins: [
-        new ExtractTextPlugin('bundle.css')
+        new ExtractTextPlugin('bundle.css'),
+        new webpack.DefinePlugin({
+            'API_URL': API_URL[environment]
+        })
     ],
     resolve: {
         extensions: ['','.css','.js','.jsx'],
