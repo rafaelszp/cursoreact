@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // this config can be in webpack.config.js or other file with constants
 var API_URL = {
-    production: JSON.stringify('prod-url'),
+    production: JSON.stringify('http://127.0.0.1:3003/api/todos'),
     development: JSON.stringify('http://localhost:3003/api/todos')
 }
 
