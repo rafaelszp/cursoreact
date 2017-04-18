@@ -37,10 +37,20 @@ BillingCycle.route('summary', (req, res, next) => {
     })
 });
 
-BillingCycle.before('get',function(req,res,next){
-    let str = req.toString();
+
+const requestLogger = (req,res,next) => {
+    let str = JSON.stringify(req.body);
     console.log(`Executando um GET com ${str}`);
-    next();
-});
+    if(req.body.name && req.body.name.match('dd')){
+        res.status(500).json({errors:['Requisição cancelada devido a uma bad word: [dd]']});
+    }else{
+        next();
+    }
+}
+
+BillingCycle.before('get',requestLogger)
+    .before('put',requestLogger)
+    .before('post',requestLogger)
+    .before('delete',requestLogger);
 
 module.exports = BillingCycle;
